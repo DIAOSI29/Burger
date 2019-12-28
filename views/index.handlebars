@@ -1,0 +1,33 @@
+<h1>Burgers To Eat</h1>
+
+<ul>
+    {{#each burgers}}
+    <li>
+        <p>
+            {{id}}. {{burger_name}}
+            <button data-burgerId="{{id}}" class="delBurger">Delete</button>
+        </p>
+    </li>
+    {{/each}}
+</ul>
+
+<h2>Add a burger</h2>
+<form id="addBurger" class="">
+    <textarea type="text" name="burger" id="addBurgerSection"></textarea>
+    <button type="submit">Add Burger!</button>
+</form>
+
+<h2>Update a burger</h2>
+<form id="updateBurger" class="button-size">
+    <h4>
+        Please select which burger you want to update on:
+    </h4>
+    <select class="update-control">
+        {{#each burgers}}
+        <option value={burger_name}>{burger_name}</option>
+
+        {{/each}}
+    </select>
+    <textarea type="text" name="movie" placeholder="what do you want to update this movie title to?"></textarea>
+    <button type="submit">Update Movie!</button>
+</form>
