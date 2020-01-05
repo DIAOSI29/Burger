@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3100;
 const exphbs = require("express-handlebars");
+const routes = require("./controllers/burgers_controller");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

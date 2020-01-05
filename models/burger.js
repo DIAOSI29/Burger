@@ -1,62 +1,29 @@
 var ORM = require("../config/orm");
 
-var selectAllBurgers = event => {
-  event.preventDefault();
-  ORM.selectAll();
-};
-
-var addBurger = event => {
-  event.preventDefault();
-  let NewBurgerName = $("#addBurgerSection")
-    .val()
-    .trim();
-
-  ORM.insertOne(NewBurgerName, false);
-};
-
-var updateBurger = event => {
-  event.preventDefault();
-  function validateForm() {
-    var isValid = true;
-    $(".update-control").each(function() {
-      if ($(this).val() === "") {
-        isValid = false;
-      }
+var burger = {
+  selectAllBurgers: function(cb) {
+    ORM.selectAll(function(res) {
+      cb(res);
     });
-    var questionLenghts = $(".chosen-select").length;
-    console.log(questionLenghts);
-    for (var i = 0; i < questionLenghts; i++) {
-      if (
-        $(".chosen-select")
-          .eq(i)
-          .val() === ""
-      ) {
-        isValid = false;
-      }
-    }
-    return isValid;
-  }
-  var newBurgerName = $("#newBurgerName").val();
-  var newBurgerDevoured = $("newBurgerDevoured")
-    .val()
-    .trim();
-  var oldBurgerName = $("#oldBurgerName").val();
+  },
 
-  if (validateForm()) {
-    ORM.updateOne(newBurgerName, newBurgerDevoured, oldBurgerName);
-    $("#newBurgerName").val("");
-    $("newBurgerDevoured").val("");
-    $("#oldBurgerName").val("");
-  } else {
-    alert("Please fill out all fields!");
+  addBurger: function(burger, cb) {
+    ORM.insertOne(burger, function(res) {
+      cb(res);
+    });
+  },
+
+  updateBurger: function(id, cb) {
+    ORM.updateOne(id, function(res) {
+      cb(res);
+    });
+  },
+
+  deleteBurger: function(id, cb) {
+    ORM.deleteOne(id, function(res) {
+      cb(res);
+    });
   }
 };
 
-var deleteBurger = () => {
-  return ORM.deleteOne();
-};
-
-exports.selectAllBurgers = selectAllBurgers;
-exports.addBurger = addBurger;
-exports.updateBurger = updateBurger;
-exports.deleteBurger = deleteBurger;
+module.exports = burger;

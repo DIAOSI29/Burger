@@ -1,7 +1,33 @@
 var express = require("express");
+var router = express.Router();
 var burger = require("../models/burger");
-var app = express();
 
-app.get("/", function(req, res) {
-  res.render("index", { burgers: burger.selectAllBurgers() });
+router.get("/", function(req, res) {
+  burger.selectAllBurgers(function(data) {
+    var hdbobj = {
+      burger: data
+    };
+    res.render("index", hdbobj);
+  });
 });
+
+router.post("/", function(req, res) {
+  burger.addBurger(req.body.burger_name, function() {
+    res.redirect("/");
+  });
+});
+
+router.put("/:id", function(req, res) {
+  var id = req.params.id;
+  burger.updateBurger(req.body.id, function() {
+    res.redirect("/");
+  });
+});
+
+router.delete("/:id", function(req, res) {
+  var id = req.param.id;
+  burger.deleteBurger(req.body.id, function() {
+    res.redirect("/");
+  });
+});
+module.exports = router;

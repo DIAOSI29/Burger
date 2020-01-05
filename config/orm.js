@@ -1,41 +1,39 @@
-var connection = require("connection.js");
+var connection = require("./connection");
 
 var ORM = {
-  selectAll: () =>
+  selectAll: cb =>
     connection.query("SELECT * FROM burgers", function(err, res) {
       if (err) throw err;
-      return JSON.stringify(res);
+      cb(res);
     }),
 
-  insertOne: (burger_name, devoured) =>
+  insertOne: (burger_name, cb) =>
     connection.query(
-      `INSERT INTO burgers (burger_name,devoured) VALUES (${burger_name}, ${devoured})`,
+      `INSERT INTO burgers (burger_name) VALUES (${burger_name})`,
       function(err, res) {
         if (err) throw err;
-        $.ajax("/api/burgers", {
-          type: "POST",
-          data: res[0]
-        }).then(() => {
-          console.log("added new burger!");
-          // Reload the page to get the updated list
-          location.reload();
-        });
+        cb(res);
       }
     ),
 
-  updateOne: (burger_name, devoured, oldBurgerName) => {
+  updateOne: (id, cb) => {
     connection.query(
-      `UPDATE burgers SET burger_name = "${burger_name}", devoured = "${devoured}" WHERE burger_name= "${oldBurgerName}"`
+      `UPDATE burgers SET devoured = "true" WHERE id= (${id})`,
+      function(err, res) {
+        if (err) throw err;
+        cb(res);
+      }
     );
   },
 
-  deleteOne: () => {
-    connection.query(
-      `DELETE FROM burgers WHERE id = this.data.burgerId`,
-      function(err, res) {
-        if (err) throw err;
-      }
-    );
+  deleteOne: (id, cb) => {
+    connection.query(`DELETE FROM burgers WHERE id = ${id}`, function(
+      err,
+      res
+    ) {
+      if (err) throw err;
+      cb(res);
+    });
   }
 };
 
