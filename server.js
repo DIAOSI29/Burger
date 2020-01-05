@@ -6,6 +6,7 @@ const routes = require("./controllers/burgers_controller");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/", routes);
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
