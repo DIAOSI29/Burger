@@ -4,8 +4,9 @@ var burger = require("../models/burger");
 
 router.get("/", function(req, res) {
   burger.selectAllBurgers(function(data) {
+    console.log(data);
     var hdbobj = {
-      burger: data
+      burgers: data
     };
     res.render("index", hdbobj);
   });
@@ -18,16 +19,15 @@ router.post("/", function(req, res) {
 });
 
 router.put("/:id", function(req, res) {
-  var id = req.params.id;
   burger.updateBurger(req.body.id, function() {
     res.redirect("/");
   });
 });
 
 router.delete("/:id", function(req, res) {
-  var id = req.param.id;
   burger.deleteBurger(req.body.id, function() {
     res.redirect("/");
   });
 });
+
 module.exports = router;

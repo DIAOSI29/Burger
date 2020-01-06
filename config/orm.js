@@ -7,14 +7,15 @@ var ORM = {
       cb(res);
     }),
 
-  insertOne: (burger_name, cb) =>
-    connection.query(
-      `INSERT INTO burgers (burger_name) VALUES (${burger_name})`,
-      function(err, res) {
-        if (err) throw err;
-        cb(res);
+  insertOne: function(burger, cb) {
+    var queryString = "INSERT INTO burgers (burger_name) VALUES (?)";
+    connection.query(queryString, [burger], function(err, result) {
+      if (err) {
+        throw err;
       }
-    ),
+      cb(result);
+    });
+  },
 
   updateOne: (id, cb) => {
     connection.query(

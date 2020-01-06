@@ -1,16 +1,16 @@
 <h1>Burgers To Eat</h1>
 <div class="container">
-    <p>Burgers To Devour!</p>
+    <p>Burgers List To Devour</p>
     <ul>
         {{#each burgers}}{{#unless devoured}}
         <li>
             <p>
                 {{id}}. {{burger_name}}
-                <button data-burgerId="{{id}}" class="updateBurger">Devour It!</button>
+                <button data-burgerId="{{id}}" id="test" class="updateBurger">Devour It!</button>
                 <button data-burgerId="{{id}}" class="delBurger">Delete</button>
             </p>
         </li>
-        {{/each}}
+        {{/unless}}{{/each}}
     </ul>
 </div>
 <div class="container">
@@ -23,7 +23,7 @@
                 <button data-burgerId="{{id}}" class="delBurger">Delete</button>
             </p>
         </li>
-        {{/each}}
+        {{/if}} {{/each}}
     </ul>
 </div>
 
@@ -31,23 +31,32 @@
 
     <h2>Add a burger</h2>
     <form id="addBurger" class="">
-        <textarea placeholder="Pleae enter new burger's name here..." type="text" name="burger"
+        <textarea placeholder="Pleae enter a burger's name here..." type="text" name="burger"
             id="addBurgerSection"></textarea>
         <button type="submit">Add Burger!</button>
     </form>
 </div>
 
+<button id="check">click here</button>
+
 
 
 
 <script type="text/javascript">
-    ${ ".updateBurger" }.click(function (event) {
+    $("#check").click(function () {
+        console.log("checked!")
+    })
+
+    $(".updateBurger").click(function (event) {
+        console.log("hey")
         event.preventDefault();
-        let idToBeUpdated = ${ this}.data("burgerId");
+        console.log("hey")
+        let idToBeUpdated = $(this).data("burgerId");
+        console.log(idToBeUpdated);
         let burgerToUpdate = {
             id: idToBeUpdated
         };
-        $.ajax(`"/${idToBeUpdated}"`, {
+        $.ajax("/" + idToBeUpdated, {
             type: "PUT",
             data: burgerToUpdate
         }).then(function () {
@@ -55,13 +64,13 @@
         })
     });
 
-    ${ ".delBurger" }.click(function (event) {
+    $(".delBurger").click(function (event) {
         event.preventDefault();
-        let idToBeDeleted = ${ this}.data("burgerId");
+        let idToBeDeleted = $(this).data("burgerId");
         let burgerToDelete = {
             id: idToBeDeleted
         }
-        $.ajax(`"/${idToBeDeleted}"`, {
+        $.ajax("/" + idToBeDeleted, {
             type: "DELETE",
             data: burgerToDelete
         }).then(function () {
@@ -69,19 +78,22 @@
         })
     })
 
-    ${ "#addBurger" }.on("submit", function (event) {
+    $("#addBurger").on("submit", function (event) {
         event.preventDefault();
         let burgerToAdd = {
-            burger_name: ${ "#addBurger [name=burger]"}.val().trim()
-    };
-    $.ajax("/", {
-        type: "POST",
-        data: burgerToAdd
-    }).then(function () {
-        console.log("Burger Added!")
-    })
+            burger_name: $("#addBurger [name=burger]").val().trim()
+        };
+        $.ajax("/", {
+            type: "POST",
+            data: burgerToAdd
+        }).then(function () {
+            console.log("Burger Added!");
+            location.reload();
+        })
     })
 
-
+    $("#test").click(function () {
+        console.log("wtf")
+    })
 
 </script>
