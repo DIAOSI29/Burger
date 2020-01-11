@@ -13,13 +13,21 @@ router.get("/", function(req, res) {
 });
 
 router.post("/", function(req, res) {
-  burger.addBurger(req.body.burger_name, function() {
-    res.redirect("/");
+  burger.addBurger(req.body.burger_name, function() {});
+  burger.selectAllBurgers(function(data) {
+    console.log(data);
+    var hdbobj = {
+      burgers: data
+    };
+    res.render("index", hdbobj);
   });
 });
 
 router.put("/:id", function(req, res) {
-  burger.updateBurger(req.params.id, function() {
+  burger.updateBurger(req.params.id, function(answer) {
+    console.log("changed?");
+    console.log(answer);
+    console.log(req.params.id);
     res.redirect("/");
   });
 });

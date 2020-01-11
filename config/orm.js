@@ -8,8 +8,9 @@ var ORM = {
     }),
 
   insertOne: (burger, cb) => {
-    var queryString = "INSERT INTO burgers (burger_name) VALUES (?)";
-    connection.query(queryString, [burger], function(err, result) {
+    var queryString =
+      "INSERT INTO burgers (burger_name, devoured) VALUES (?,?)";
+    connection.query(queryString, [burger, 0], function(err, result) {
       if (err) {
         throw err;
       }

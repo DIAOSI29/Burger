@@ -33,7 +33,7 @@
     <form id="addBurger" class="">
         <textarea placeholder="Pleae enter a burger's name here..." type="text" name="burger"
             id="addBurgerSection"></textarea>
-        <button type="submit">Add Burger!</button>
+        <button type="submit">Add a Burger!</button>
     </form>
 </div>
 
@@ -45,24 +45,28 @@
 <script type="text/javascript">
 
 
+
+
     $(".updateBurger").click(function (event) {
         event.preventDefault();
         let idToBeUpdated = $(this).data("burgerid");
-        $.ajax("/" + idToBeUpdated, {
+        $.ajax(`/${idToBeUpdated}`, {
             type: "PUT"
-        }).then(function () {
-            console.log("Devoured!")
+        }).then(() => {
+            console.log("Devoured!");
+
         })
     });
 
     $(".delBurger").click(function (event) {
-        event.preventDefault();
+        event.stopPropagation();
         let idToBeDeleted = $(this).data("burgerid");
         $.ajax({
             method: "DELETE",
-            url: "/" + idToBeDeleted
-        }).then(function () {
-            console.log("Burger deleted!")
+            url: `/${idToBeDeleted}`
+        }).then(() => {
+            console.log("Burger deleted!");
+            location.reload();
         })
     })
 
