@@ -19,13 +19,13 @@ router.post("/", function(req, res) {
 });
 
 router.put("/:id", function(req, res) {
-  burger.updateBurger(req.body.id, function() {
+  burger.updateBurger(req.params.id, function() {
     res.redirect("/");
   });
 });
 
 router.delete("/:id", function(req, res) {
-  burger.deleteBurger(req.body.id, function() {
+  burger.deleteBurger(req.params.id, function() {
     res.redirect("/");
   });
 });

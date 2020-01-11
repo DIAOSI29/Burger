@@ -6,8 +6,8 @@
         <li>
             <p>
                 {{id}}. {{burger_name}}
-                <button data-burgerId="{{id}}" id="test" class="updateBurger">Devour It!</button>
-                <button data-burgerId="{{id}}" class="delBurger">Delete</button>
+                <button data-burgerid="{{id}}" id="test" class="updateBurger">Devour It!</button>
+                <button data-burgerid="{{id}}" class="delBurger">Delete</button>
             </p>
         </li>
         {{/unless}}{{/each}}
@@ -20,7 +20,7 @@
         <li>
             <p>
                 {{id}}. {{burger_name}}
-                <button data-burgerId="{{id}}" class="delBurger">Delete</button>
+                <button data-burgerid="{{id}}" class="delBurger">Delete</button>
             </p>
         </li>
         {{/if}} {{/each}}
@@ -37,28 +37,19 @@
     </form>
 </div>
 
-<button id="check">click here</button>
+
 
 
 
 
 <script type="text/javascript">
-    $("#check").click(function () {
-        console.log("checked!")
-    })
+
 
     $(".updateBurger").click(function (event) {
-        console.log("hey")
         event.preventDefault();
-        console.log("hey")
-        let idToBeUpdated = $(this).data("burgerId");
-        console.log(idToBeUpdated);
-        let burgerToUpdate = {
-            id: idToBeUpdated
-        };
+        let idToBeUpdated = $(this).data("burgerid");
         $.ajax("/" + idToBeUpdated, {
-            type: "PUT",
-            data: burgerToUpdate
+            type: "PUT"
         }).then(function () {
             console.log("Devoured!")
         })
@@ -66,13 +57,10 @@
 
     $(".delBurger").click(function (event) {
         event.preventDefault();
-        let idToBeDeleted = $(this).data("burgerId");
-        let burgerToDelete = {
-            id: idToBeDeleted
-        }
-        $.ajax("/" + idToBeDeleted, {
-            type: "DELETE",
-            data: burgerToDelete
+        let idToBeDeleted = $(this).data("burgerid");
+        $.ajax({
+            method: "DELETE",
+            url: "/" + idToBeDeleted
         }).then(function () {
             console.log("Burger deleted!")
         })

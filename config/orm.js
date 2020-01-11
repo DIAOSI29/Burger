@@ -7,7 +7,7 @@ var ORM = {
       cb(res);
     }),
 
-  insertOne: function(burger, cb) {
+  insertOne: (burger, cb) => {
     var queryString = "INSERT INTO burgers (burger_name) VALUES (?)";
     connection.query(queryString, [burger], function(err, result) {
       if (err) {
@@ -18,17 +18,18 @@ var ORM = {
   },
 
   updateOne: (id, cb) => {
-    connection.query(
-      `UPDATE burgers SET devoured = "true" WHERE id= (${id})`,
-      function(err, res) {
-        if (err) throw err;
-        cb(res);
+    var queryString = "UPDATE burgers SET devoured = true WHERE id = ?";
+
+    connection.query(queryString, [id], function(err, result) {
+      if (err) {
+        throw err;
       }
-    );
+      cb(result);
+    });
   },
 
   deleteOne: (id, cb) => {
-    connection.query(`DELETE FROM burgers WHERE id = ${id}`, function(
+    connection.query("DELETE FROM burgers WHERE id = ?", [id], function(
       err,
       res
     ) {
