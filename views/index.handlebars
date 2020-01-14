@@ -6,7 +6,7 @@
         <li>
             <p>
                 {{id}}. {{burger_name}}
-                <button data-burgerid="{{id}}" id="test" class="updateBurger">Devour It!</button>
+                <button data-burgerid="{{id}}" class="updateBurger">Devour It!</button>
                 <button data-burgerid="{{id}}" class="delBurger">Delete</button>
             </p>
         </li>
@@ -43,18 +43,15 @@
 
 
 <script type="text/javascript">
-
-
-
-
     $(".updateBurger").click(function (event) {
         event.preventDefault();
         let idToBeUpdated = $(this).data("burgerid");
+        console.log(idToBeUpdated)
         $.ajax(`/${idToBeUpdated}`, {
             type: "PUT"
         }).then(() => {
             console.log("Devoured!");
-
+            reloadPage();
         })
     });
 
@@ -66,7 +63,7 @@
             url: `/${idToBeDeleted}`
         }).then(() => {
             console.log("Burger deleted!");
-            location.reload();
+            reloadPage();
         })
     })
 
@@ -76,16 +73,15 @@
             burger_name: $("#addBurger [name=burger]").val().trim()
         };
         $.ajax("/", {
-            type: "POST",
+            method: "POST",
             data: burgerToAdd
         }).then(function () {
             console.log("Burger Added!");
-            location.reload();
+            reloadPage();
         })
     })
 
-    $("#test").click(function () {
-        console.log("wtf")
-    })
-
+    const reloadPage = () => {
+        location.reload(true);
+    }
 </script>
