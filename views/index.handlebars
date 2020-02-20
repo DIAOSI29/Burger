@@ -1,42 +1,47 @@
-<h1>Burgers To Eat</h1>
-<div class="container">
-    <p>Burgers List To Devour</p>
-    <ul>
+<div class="container" style="text-align: center; ">
+    <h1 style="background-color:orange; padding:20px;border-radius:35%;margin: 30px 0 30px 0; font-family: 'Lacquer', sans-serif;font-size:50px;
+">Burgers To Eat</h1>
+    <p style="color: green;font-size:30px;font-family: 'Lacquer', sans-serif;
+" class="mt-3 mb-3">Burgers List To Devour</p>
+    <ul style="list-style-type: none">
         {{#each burgers}}{{#unless devoured}}
-        <li>
+        <li style="list-style-type: none">
             <p>
                 {{id}}. {{burger_name}}
-                <button data-burgerid="{{id}}" class="updateBurger">Devour It!</button>
-                <button data-burgerid="{{id}}" class="delBurger">Delete</button>
+                <button data-burgerid="{{id}}" class="updateBurger btn btn-primary ml-3 mr-3">Devour It!</button>
+                <button data-burgerid="{{id}}" class="delBurger btn btn-danger">Delete</button>
             </p>
         </li>
         {{/unless}}{{/each}}
     </ul>
-</div>
-<div class="container">
-    <p>Burgers Devoured!</p>
-    <ul>
-        {{#each burgers}}{{#if devoured}}
-        <li>
-            <p>
-                {{id}}. {{burger_name}}
-                <button data-burgerid="{{id}}" class="delBurger">Delete</button>
-            </p>
-        </li>
-        {{/if}} {{/each}}
-    </ul>
-</div>
 
-<div id="addBurgerDiv">
+    <div class="container">
+        <p style="color: rgb(155, 0, 0);font-size:30px;font-family: 'Lacquer', sans-serif; margin-top:30px
+" class="mt-3">Burgers Devoured!</p>
+        <ul style="list-style-type: none">
+            {{#each burgers}}{{#if devoured}}
+            <li>
+                <p>
+                    {{id}}. {{burger_name}}
+                    <button data-burgerid="{{id}}" class="ml-3 delBurger btn btn-danger">Delete</button>
+                </p>
+            </li>
+            {{/if}} {{/each}}
+        </ul>
+    </div>
 
-    <h2>Add a burger</h2>
-    <form id="addBurger" class="">
-        <textarea placeholder="Pleae enter a burger's name here..." type="text" name="burger"
-            id="addBurgerSection"></textarea>
-        <button type="submit">Add a Burger!</button>
-    </form>
+    <div id="addBurgerDiv">
+
+        <h2 style="font-family: 'Lacquer', sans-serif;
+">Add a burger</h2>
+        <form id="addBurger" class="">
+            <textarea class="form-control m" style="width:50%;margin:auto; margin-top:30px; margin-bottom:30px;"
+                placeholder=" Pleae enter a burger's name here..." type="text" name="burger"
+                id="addBurgerSection"></textarea>
+            <button type="submit" class="btn btn-success">Add a Burger!</button>
+        </form>
+    </div>
 </div>
-
 
 
 
